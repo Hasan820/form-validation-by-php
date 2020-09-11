@@ -1,0 +1,97 @@
+<?php
+
+$errname = $erremail = $errweb = $errcomment = $errgender="";
+
+$name = $email = $website = $comment = $gender = "";
+
+if($_SERVER["REQUEST_METHOD"]=="POST")
+{
+	if(empty($_POST["name"])){
+		$errname = "<span style='color:red'>name is required</span>";
+	}else{
+		$name = validate($_POST["name"]);
+	}
+	if(empty($_POST["email"])){
+		$erremail = "<span style='color:red'>email is required</span>";
+	}else{
+		$email = validate($_POST["email"]);
+	}
+	if(empty($_POST["website"])){
+		$errweb = "<span style='color:red'>website is required</span>";
+	}else{
+		$website = validate($_POST["website"]);
+	}
+	if(empty($_POST["gender"])){
+		$errgender = "<span style='color:red'>gender is required</span>";
+	}else{
+		$gender = validate($_POST["gender"]);
+	}
+	
+
+}
+function validate($data)
+{
+	$data = trim($data);
+	$data = stripcslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
+}
+
+?>
+
+
+<!doctype html>
+<html>
+
+<head>
+<title>PHP FUNDAMENTALS</title>
+
+</head>
+
+
+<body>
+
+<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
+<table>
+<p style="color:red">* Required Field</p>
+<tr>
+<td>Name</td>
+<td><input type="text" name="name"/><span style='color:red'>*</span><?php echo $errname?></td>
+
+</tr>
+<tr>
+<td>Email</td>
+<td><input type="text" name="email"/><span style='color:red'>*<?php echo $erremail?></td>
+
+</tr>
+<tr>
+<td>Website</td>
+<td><input type="text" name="website"/><span style='color:red'>*<?php echo $errweb?></td>
+
+</tr>
+<tr>
+<td>Comment</td>
+<td><textarea name="comment" rows="5" cols="50"></textarea></td>
+
+</tr>
+<tr>
+<td>Gender</td>
+<td><input type="radio" name="gender" value="male"/>Male <span style='color:red'>*</span> <?php echo $errgender?>
+<input type="radio" name="gender" value="female"/>Female</td>
+
+</tr>
+<tr>
+<td></td>
+<td><input type="submit" name="submit" value="Submit"/></td>
+
+</tr>
+
+</table>
+</form>
+
+
+
+
+
+</body>
+</html>
